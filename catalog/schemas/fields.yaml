@@ -1,0 +1,37 @@
+# Minimal field dictionary (extend as needed)
+server:
+  - key: brand
+    required: true
+  - key: model
+    required: true
+  - key: cpu_sockets
+    type: int
+  - key: cpu_gen
+  - key: memory_max_gb
+    type: int
+  - key: drive_bays
+  - key: raid
+  - key: psu
+  - key: gpu_support
+  - key: nic
+  - key: form_factor
+  - key: lifecycle_status
+  - key: updated_at
+switch:
+  - key: ports_ge
+    type: int
+  - key: ports_10ge
+    type: int
+  - key: uplinks_25g
+    type: int
+  - key: poe_total_w
+    type: int
+security:
+  - key: l7_tput_gbps
+    type: float
+  - key: ssl_decrypt_gbps
+    type: float
+  - key: concurrent_sessions_m
+    type: float
+  - key: new_connections_kps
+    type: float

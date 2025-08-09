@@ -1,0 +1,28 @@
+name: "✨ Feature"
+description: 提出一个新功能或改进
+labels: [enhancement, needs-triage]
+body:
+  - type: textarea
+    id: motivation
+    attributes:
+      label: 背景与动机
+      description: 这个功能解决什么问题？
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 方案草案
+      description: 粗颗粒度描述/验收标准
+      placeholder: "- 验收标准：\n  - [ ] ...\n  - [ ] ..."
+  - type: dropdown
+    id: area
+    attributes:
+      label: 影响模块
+      multiple: true
+      options:
+        - catalog
+        - selector
+        - web
+        - infra
+        - docs

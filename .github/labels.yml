@@ -1,0 +1,27 @@
+- name: bug
+  color: d73a4a
+  description: Bug 报告
+- name: enhancement
+  color: a2eeef
+  description: 新功能/改进
+- name: task
+  color: 0366d6
+  description: 交付型任务
+- name: needs-triage
+  color: fbca04
+  description: 待分诊
+- name: infra
+  color: 0e8a16
+  description: 基础设施/CI/CD
+- name: catalog
+  color: 7057ff
+  description: 数据目录/字段字典
+- name: selector
+  color: 5319e7
+  description: 规则/检索/评分
+- name: web
+  color: cfd3d7
+  description: 前端
+- name: docs
+  color: 008672
+  description: 文档

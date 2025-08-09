@@ -1,0 +1,25 @@
+name: auto-project-add
+on:
+  issues:
+    types: [opened, reopened]
+  pull_request_target:
+    types: [opened, reopened]
+jobs:
+  add:
+    runs-on: ubuntu-latest
+    if: secrets.PROJECT_ID != ''
+    steps:
+      - name: Install gh
+        uses: cli/cli-action@v2
+      - name: Add issue to project
+        if: github.event_name == 'issues'
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          gh api graphql -f query='mutation($project:ID!,$issue:ID!){addProjectV2ItemById(input:{projectId:$project, contentId:$issue}){item{id}}}' -F project="${{ secrets.PROJECT_ID }}" -F issue="${{ github.event.issue.node_id }}"
+      - name: Add PR to project
+        if: github.event_name == 'pull_request_target'
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          gh api graphql -f query='mutation($project:ID!,$pr:ID!){addProjectV2ItemById(input:{projectId:$project, contentId:$pr}){item{id}}}' -F project="${{ secrets.PROJECT_ID }}" -F pr="${{ github.event.pull_request.node_id }}"

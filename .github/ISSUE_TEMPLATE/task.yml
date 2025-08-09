@@ -1,0 +1,17 @@
+name: "🧱 Task"
+description: 可交付任务（对齐路线图）
+labels: [task]
+body:
+  - type: textarea
+    id: deliverable
+    attributes:
+      label: 可交付物
+      description: 明确产出物（文件/代码/脚本/报告）
+      placeholder: "示例：selector/core/scoring.py 初版 + 单元测试"
+    validations:
+      required: true
+  - type: textarea
+    id: checklist
+    attributes:
+      label: Checklist
+      placeholder: "- [ ] 定义完成（DoD）\n- [ ] 验收标准"

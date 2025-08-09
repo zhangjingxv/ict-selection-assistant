@@ -1,0 +1,33 @@
+name: "🐞 Bug"
+description: 报告一个可复现的问题
+labels: [bug, needs-triage]
+body:
+  - type: markdown
+    attributes:
+      value: "感谢反馈！请尽量提供可复现信息。"
+  - type: input
+    id: context
+    attributes:
+      label: 环境信息
+      description: OS/Browser/Docker 等
+      placeholder: "macOS 14 / Docker 26 / Python 3.11"
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 发生了什么？
+      description: 期望行为 vs 实际行为
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      description: 清晰的步骤（命令/接口/截图）
+      placeholder: "1. ...\n2. ..."
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志/控制台输出
+      render: shell

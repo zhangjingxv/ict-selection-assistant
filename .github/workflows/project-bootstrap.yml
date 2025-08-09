@@ -1,0 +1,35 @@
+name: project-bootstrap
+on:
+  workflow_dispatch:
+    inputs:
+      project_name:
+        description: "Project V2 名称"
+        required: true
+        default: "ICT Assistant Roadmap"
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install gh
+        uses: cli/cli-action@v2
+      - name: Create milestones
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          set -e
+          gh api repos/${{ github.repository }}/milestones -f title='M1 MVP 上线' -f state=open || true
+          gh api repos/${{ github.repository }}/milestones -f title='M2 数据闭环' -f state=open || true
+          gh api repos/${{ github.repository }}/milestones -f title='M3 公测与发布' -f state=open || true
+      - name: Create project v2
+        id: create_project
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          orgLogin="${{ github.repository_owner }}"
+          name="${{ github.event.inputs.project_name }}"
+          oid=$(gh api graphql -f query='query($login:String!){user(login:$login){id}}' -F login="$orgLogin" --jq '.data.user.id' || true)
+          if [ -z "$oid" ]; then
+            oid=$(gh api graphql -f query='query($login:String!){organization(login:$login){id}}' -F login="$orgLogin" --jq '.data.organization.id')
+          fi
+          pid=$(gh api graphql -f query='mutation($owner:ID!,$title:String!){createProjectV2(input:{ownerId:$owner,title:$title}){projectV2{id}}}' -F owner=$oid -F title="$name" --jq '.data.createProjectV2.projectV2.id')
+          echo "project_id=$pid" >> $GITHUB_OUTPUT

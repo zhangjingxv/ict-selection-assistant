@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 文档与路线图
+    url: https://example.com/docs
+    about: 先看这里是否已有答案
