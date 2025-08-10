@@ -1,4 +1,5 @@
-category,brand,model,spec_json,lifecycle_status,updated_at
-server,H3C,UniServer G5-2600,"{""cpu_sockets"":2,""cpu_gen"":""Xeon 3rd"",""memory_max_gb"":2048,""drive_bays"":""8x2.5"",""raid"":""9300-8i"",""psu"":""2x800W"",""gpu_support"":[""L20x2""],""form_factor"":""2U"",""nic"":""2x10G+OCP3.0""}",GA,2025-08-01
-switch,H3C,S5560X-48S-PWR,"{""ports_ge"":48,""uplinks_25g"":2,""poe_total_w"":740}",GA,2025-08-01
-security,H3C,SecPath F1000,"{""l7_tput_gbps"":6.5,""ssl_decrypt_gbps"":2.0,""concurrent_sessions_m"":1.5,""new_connections_kps"":80}",GA,2025-08-01
+category,template,params_json,notes,updated_at
+server,virtualization_baseline,"{""scenarios"": [""virtualization""], ""compute"": {""vcpu_range"": [8, 32], ""memory_gb_range"": [32, 256]}, ""network"": {""nic_min"": ""2x10G""}, ""storage"": {""hot_capacity_tb"": 2}}",面向虚拟化的通用参数模板,2025-08-01
+switch,campus_access_l3,"{""scenarios"": [""campus_access""], ""network"": {""ports_ge"": ">=48", ""uplinks_25g"": ">=2"}, ""security"": {""acl"": true}}",园区接入汇聚模板,2025-08-01
+security,boundary_ngfw,"{""scenarios"": [""sec_boundary""], ""security"": {""l7_tput_gbps"": ">=5", ""ssl_decrypt_gbps"": ">=2", ""log_retention_days"": 180}}",安全边界 NGFW 模板,2025-08-01
+

@@ -1,0 +1,10 @@
+{
+  "collection": "ict_docs",
+  "provider": "qwen",
+  "model": "text-embedding-v2",
+  "docs": [
+    {"id":"a1","text":"RAG系统的带宽与延迟受检索吞吐与模型推理影响，应设置P95目标与错误预算。","meta":{"source":"guide"}},
+    {"id":"a2","text":"安全边界建议启用WAF严格模式并结合IPS，日志保留180天以满足合规审计。","meta":{"source":"security"}},
+    {"id":"a3","text":"参数化扩容计算并发≈QPS×(P95/1000)，并按增长倍数外推12个月容量。","meta":{"source":"capacity"}}
+  ]
+}

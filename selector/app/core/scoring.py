@@ -1,7 +1,12 @@
 from typing import Dict, Any
 
 DEFAULT_WEIGHTS = {
-    "cpu": 0.35, "memory": 0.25, "nic": 0.15, "reliability": 0.15, "price": 0.10
+    "cpu": 0.35,
+    "memory": 0.25,
+    "nic": 0.15,
+    "reliability": 0.15,
+    # Negative means cheaper is better
+    "price": -0.10,
 }
 
 def normalize(metric: str, value: float) -> float:

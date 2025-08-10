@@ -1,0 +1,18 @@
+[
+  {
+    "id": "seed_zt",
+    "text": "零信任(Zero Trust)强调不默认信任任何网络边界,基于身份、设备与上下文进行细粒度访问控制,常见做法包括微分段、强身份认证(MFA)、最小权限策略、持续评估与审计记录。公网边界建议启用WAF与IPS,内部采用东-西向零信任策略。",
+    "meta": {"source": "industry_seed", "topic": "zero_trust"}
+  },
+  {
+    "id": "seed_cdn",
+    "text": "内容分发网络(CDN)通过边缘节点缓存与就近访问降低回源压力与延迟,关键参数包括带宽峰值、并发连接、命中率与回源策略。对AI应用与RAG系统,可用CDN缓存静态资源与向量检索结果摘要以降低端到端延迟。",
+    "meta": {"source": "industry_seed", "topic": "cdn"}
+  },
+  {
+    "id": "seed_waf",
+    "text": "WAF(应用防火墙)应对OWASP Top 10与Bot流量,在高安全等级场景建议选择严格策略并结合IPS/限流;日志留存180天以上便于审计与取证;对于API,建议结合API网关进行鉴权、配额与请求速率控制。",
+    "meta": {"source": "industry_seed", "topic": "waf"}
+  }
+]
+

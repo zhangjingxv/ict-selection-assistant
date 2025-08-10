@@ -1,0 +1,6 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, PingFang SC, Noto Sans SC, "Microsoft YaHei", sans-serif; }
+input, select, textarea, button { margin: 6px 0; padding: 6px 8px; }
+button { cursor: pointer; }
+
+
