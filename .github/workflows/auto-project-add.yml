@@ -7,8 +7,14 @@ on:
 jobs:
   add:
     runs-on: ubuntu-latest
-    if: secrets.PROJECT_ID != ''
+    if: github.event_name == 'issues' || github.event_name == 'pull_request_target'
     steps:
+      - name: Check PROJECT_ID secret
+        run: |
+          if [ -z "${{ secrets.PROJECT_ID }}" ]; then
+            echo "PROJECT_ID secret is not set."
+            exit 1
+          fi
       - name: Install gh
         uses: cli/cli-action@v2
       - name: Add issue to project

@@ -189,7 +189,11 @@ async def rag_index(req: RAGIndexRequest, _=Depends(require_api_key)):
         dim = 384
     vecs = emb.get("vectors", [])
     qdr = Qdrant()
-    await qdr.create_collection(req.collection, dim)
+    qdrant_result: Dict[str, Any] | None = None
+    try:
+        await qdr.create_collection(req.collection, dim)
+    except Exception as e:
+        qdrant_result = {"error": f"create_collection_failed: {e}"}
     payloads = []
     for c in chunks:
         doc_id = str(c.get("doc_id"))
@@ -204,10 +208,14 @@ async def rag_index(req: RAGIndexRequest, _=Depends(require_api_key)):
     # stable numeric ids for idempotent upserts
     from .rag.indexer import stable_id
     ids = [stable_id(str(p.get("id"))) for p in payloads]
-    r = await qdr.upsert(req.collection, vecs, payloads, ids=ids)
+    try:
+        r = await qdr.upsert(req.collection, vecs, payloads, ids=ids)
+        qdrant_result = r
+    except Exception as e:
+        qdrant_result = {"error": f"upsert_failed: {e}"}
     # update BM25 registry for this collection
     bm25_registry.add_docs(req.collection, [{"id": p.get("id"), "text": p.get("text", "")} for p in payloads])
-    return {"ok": True, "provider": emb.get("provider"), "qdrant": r, "filter_stats": stats}
+    return {"ok": True, "provider": emb.get("provider"), "qdrant": qdrant_result, "filter_stats": stats}
 
 
 class RAGSearchRequest(BaseModel):
@@ -227,9 +235,20 @@ async def rag_search(req: RAGSearchRequest, _=Depends(require_api_key)):
     emb = await embed_texts([req.query], provider=req.provider or "auto", model=req.model)
     vec = emb.get("vectors", [[0.0]])[0]
     qdr = Qdrant()
-    out = await qdr.search(req.collection, vec, max(20, req.topk))
-    # If client requested filtering by payload metadata, apply here as a second-stage filter
-    hits = out.get("result") or out.get("hits") or []
+    out: Dict[str, Any] = {}
+    hits: List[Dict[str, Any]] = []
+    try:
+        out = await qdr.search(req.collection, vec, max(20, req.topk))
+        hits = out.get("result") or out.get("hits") or []
+    except Exception:
+        # Fallback to BM25-only search if vector DB unreachable
+        bm25_hits = bm25_registry.search(req.collection, req.query, topk=max(20, req.topk))
+        for s, d in bm25_hits:
+            hits.append({
+                "id": d.get("id"),
+                "score": float(s),
+                "payload": {"id": d.get("id"), "text": d.get("text", "")},
+            })
     if req.where or req.where_any:
         def ok(p: Dict[str, Any]) -> bool:
             meta = p or {}
@@ -303,8 +322,18 @@ async def recommend(req: RecommendRequest, _=Depends(require_api_key)):
         emb = await embed_texts([query_text], provider=req.provider or "auto", model=req.model)
         vec = emb.get("vectors", [[0.0]])[0]
         qdr = Qdrant()
-        out = await qdr.search(req.collection, vec, 5)
-        hits = out.get("result")
+        hits: List[Dict[str, Any]] | None = None
+        try:
+            out = await qdr.search(req.collection, vec, 5)
+            hits = out.get("result")
+        except Exception:
+            # BM25 fallback if Qdrant not available
+            bm = bm25_registry.search(req.collection, query_text, topk=5)
+            hits = [{
+                "id": d.get("id"),
+                "score": float(s),
+                "payload": {"id": d.get("id"), "text": d.get("text", "")},
+            } for (s, d) in bm]
         # Normalize evidence items
         evidence = []
         for h in hits or []:
@@ -391,7 +420,11 @@ async def rag_evaluate(req: RAGEvalRequest, _=Depends(require_api_key)):
 @app.get("/api/rag/collections")
 async def list_collections(_=Depends(require_api_key)):
     qdr = Qdrant()
-    qdrant = await qdr.list_collections()
+    qdrant: Dict[str, Any] = {}
+    try:
+        qdrant = await qdr.list_collections()
+    except Exception:
+        qdrant = {"error": "qdrant_unreachable"}
     names = []
     try:
         for c in (qdrant.get("result", {}) or {}).get("collections", []) or []:
@@ -408,7 +441,11 @@ async def list_collections(_=Depends(require_api_key)):
 async def delete_collection(name: str, _=Depends(require_api_key)):
     qdr = Qdrant()
     bm25_registry.reset(name)
-    res = await qdr.delete_collection(name)
+    res: Dict[str, Any] | None = None
+    try:
+        res = await qdr.delete_collection(name)
+    except Exception as e:
+        res = {"error": f"delete_failed: {e}"}
     return {"ok": True, "qdrant": res}
 
 

@@ -1,5 +1,6 @@
 import './globals.css';
 import React from 'react';
+import ClientTopbar from './ClientTopbar';
 
 export const metadata = {
   title: 'ICT 选型助手 · 参数化规划',
@@ -9,7 +10,10 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="zh-CN">
-      <body>{children}</body>
+      <body>
+        <ClientTopbar />
+        {children}
+      </body>
     </html>
   );
 }
