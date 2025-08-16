@@ -2,9 +2,197 @@
 import React, { useMemo, useState } from 'react';
 import { postPlan, getRubric, postInfer } from '@/lib/api';
 
+import '@/styles/common.css';
+import Navbar from '@/lib/components/Navbar';
+import AdvantageCards from '@/lib/components/AdvantageCards';
+import PricingCards from '@/lib/components/PricingCards';
+import FAQList from '@/lib/components/FAQList';
 const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://127.0.0.1:8000';
 
+const partners = [
+  '阿里云', '腾讯云', '华为云', 'AWS', 'Google Cloud', 'Microsoft Azure', '字节跳动', '京东云', '百度智能云', '美团', '小米', '网易'
+];
+
+const advantages = [
+  { title: '高效转化', desc: '专注业务场景，提升用户转化率' },
+  { title: '智能推荐', desc: 'AI驱动，精准匹配需求' },
+  { title: '易用性强', desc: '极简操作，快速上手' },
+  { title: '安全可靠', desc: '企业级安全保障' },
+  { title: '灵活扩展', desc: '支持多种业务场景' },
+  { title: '数据可视化', desc: '实时数据分析与展示' }
+];
+
+const steps = [
+  '注册账号',
+  '配置业务场景',
+  '快速上线产品'
+];
+
+const pricing = [
+  {
+    name: '基础版',
+    price: '100元/月',
+    features: ['核心功能', '标准支持', '最多3个业务场景'],
+    cta: '立即购买'
+  },
+  {
+    name: '专业版',
+    price: '200元/月',
+    features: ['全部基础功能', '优先支持', '最多10个业务场景', 'API接入'],
+    cta: '免费试用'
+  },
+  {
+    name: '企业版',
+    price: '300元/月',
+    features: ['全部专业功能', '专属顾问', '无限业务场景', '定制开发'],
+    cta: '联系我们'
+  }
+];
+
+const testimonials = [
+  { user: '张三', avatar: 'https://randomuser.me/api/portraits/men/32.jpg', text: '产品极大提升了我们的业务效率，推荐！' },
+  { user: '李四', avatar: 'https://randomuser.me/api/portraits/women/44.jpg', text: '界面友好，功能强大，客服响应快。' },
+  { user: '王五', avatar: 'https://randomuser.me/api/portraits/men/65.jpg', text: '定价合理，扩展性强，非常适合中小企业。' }
+];
+
+const faqs = [
+  { q: '如何开始使用产品？', a: '注册账号后，按照指引配置业务场景即可快速上线。' },
+  { q: '是否支持定制开发？', a: '企业版支持定制开发，欢迎联系我们获取方案。' },
+  { q: '数据是否安全？', a: '我们采用企业级安全策略，保障您的数据安全。' },
+  { q: '是否有免费试用？', a: '专业版支持免费试用，欢迎体验。' }
+];
+
 export default function Page() {
+  const [faqOpen, setFaqOpen] = useState<number | null>(null);
+
+  return (
+    <main className="landing-container">
+      {/* 顶部导航栏 */}
+      <nav className="navbar">
+        <div className="logo">SaaS选型助手</div>
+        <ul className="nav-links">
+          <li><a href="#advantages">优势</a></li>
+          <li><a href="#pricing">定价</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ul>
+        <a href="#cta" className="nav-cta">免费试用</a>
+      </nav>
+
+      {/* 标题区 */}
+      <section className="hero">
+        <div className="hero-content">
+          <h1>高转化率SaaS选型落地页</h1>
+          <p>专注业务场景，提升用户转化率，助力企业智能升级</p>
+          <div className="hero-stats">
+            <span>1200+ 企业用户</span>
+            <span>99.9% SLA保障</span>
+            <span>7x24小时服务</span>
+          </div>
+          <a href="#cta" className="button button-primary">立即体验</a>
+        </div>
+        <div className="hero-image">
+          {/* 可放产品示意图 */}
+        </div>
+      </section>
+
+      {/* 合作伙伴/客户Logo区 */}
+      <section className="partners">
+        <h2>合作伙伴</h2>
+        <div className="partner-logos">
+          {partners.map((p, i) => (
+            <span key={i} className="partner-logo">{p}</span>
+          ))}
+        </div>
+      </section>
+
+      {/* 产品优势区 */}
+      <section id="advantages" className="advantages">
+        <h2>产品优势</h2>
+        <div className="advantage-cards">
+          {advantages.map((adv, i) => (
+            <div key={i} className="advantage-card">
+              <h3>{adv.title}</h3>
+              <p>{adv.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 工作原理区 */}
+      <section className="how-it-works">
+        <h2>工作原理</h2>
+        <div className="steps">
+          {steps.map((step, i) => (
+            <div key={i} className="step-card">
+              <span className="step-number">{i + 1}</span>
+              <span>{step}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 定价模块 */}
+      <section id="pricing" className="pricing">
+        <h2>定价方案</h2>
+        <div className="pricing-cards">
+          {pricing.map((plan, i) => (
+            <div key={i} className="pricing-card">
+              <h3>{plan.name}</h3>
+              <div className="price">{plan.price}</div>
+              <ul>
+                {plan.features.map((f, j) => <li key={j}>{f}</li>)}
+              </ul>
+              <a href="#cta" className="button button-secondary">{plan.cta}</a>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 用户评价区 */}
+      <section className="testimonials">
+        <h2>深受全球用户的喜爱</h2>
+        <div className="testimonial-cards">
+          {testimonials.map((t, i) => (
+            <div key={i} className="testimonial-card">
+              <img src={t.avatar} alt={t.user} className="testimonial-avatar" />
+              <div className="testimonial-user">{t.user}</div>
+              <div className="testimonial-text">{t.text}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 常见问题区 */}
+      <section id="faq" className="faq">
+        <h2>常见问题</h2>
+        <div className="faq-list">
+          {faqs.map((f, i) => (
+            <div key={i} className="faq-item">
+              <button className="faq-question" onClick={() => setFaqOpen(faqOpen === i ? null : i)}>
+                {f.q}
+              </button>
+              {faqOpen === i && <div className="faq-answer">{f.a}</div>}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 行动号召区 */}
+      <section id="cta" className="cta">
+        <h2>立即体验高转化率SaaS选型助手</h2>
+        <a href="/management" className="button button-primary">开始选型</a>
+      </section>
+
+      {/* 页脚 */}
+      <footer className="footer">
+        <div>© 2025 SaaS选型助手 | 新品速递 | 条款条件</div>
+        <div className="footer-social">
+          <a href="#">微博</a> | <a href="#">知乎</a> | <a href="#">Newsletter</a>
+        </div>
+      </footer>
+    </main>
+  );
+}
   const [scenario, setScenario] = useState('rag');
   const [qps, setQps] = useState(800);
   const [p95, setP95] = useState(300);

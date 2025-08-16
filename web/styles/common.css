@@ -1,0 +1,355 @@
+/* ====== 通用布局 ====== */
+.landing-container {
+  font-family: 'Inter', 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
+  background: #f8f9fb;
+  color: #222;
+  min-height: 100vh;
+}
+
+/* ====== 顶部导航栏 ====== */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 40px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.logo {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #2a5bd7;
+}
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+.nav-links a {
+  color: #222;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links a:hover {
+  color: #2a5bd7;
+}
+.nav-cta {
+  background: #2a5bd7;
+  color: #fff;
+  padding: 8px 24px;
+  border-radius: 24px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.nav-cta:hover {
+  background: #1749b1;
+}
+
+/* ====== 标题区 ====== */
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 64px 40px 32px 40px;
+  background: linear-gradient(90deg,#eaf3ff 60%,#fff 100%);
+}
+.hero-content {
+  max-width: 520px;
+}
+.hero h1 {
+  font-size: 2.6rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 24px;
+}
+.hero-stats {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  font-size: 1rem;
+  color: #2a5bd7;
+}
+.button {
+  display: inline-block;
+  padding: 10px 28px;
+  border-radius: 24px;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.button-primary {
+  background: #2a5bd7;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(42,91,215,0.08);
+}
+.button-primary:hover {
+  background: #1749b1;
+}
+.button-secondary {
+  background: #fff;
+  color: #2a5bd7;
+  border: 1px solid #2a5bd7;
+}
+.button-secondary:hover {
+  background: #eaf3ff;
+}
+
+/* ====== 合作伙伴 ====== */
+.partners {
+  padding: 32px 40px;
+  background: #fff;
+}
+.partner-logos {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+.partner-logo {
+  background: #eaf3ff;
+  color: #2a5bd7;
+  padding: 8px 20px;
+  border-radius: 16px;
+  font-weight: 500;
+  font-size: 1rem;
+  box-shadow: 0 1px 4px rgba(42,91,215,0.06);
+}
+
+/* ====== 产品优势 ====== */
+.advantages {
+  padding: 48px 40px 32px 40px;
+  background: #f8f9fb;
+}
+.advantage-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+.advantage-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(42,91,215,0.06);
+  padding: 24px;
+  text-align: left;
+  transition: box-shadow 0.2s;
+}
+.advantage-card:hover {
+  box-shadow: 0 4px 16px rgba(42,91,215,0.12);
+}
+
+/* ====== 工作原理 ====== */
+.how-it-works {
+  padding: 48px 40px 32px 40px;
+  background: #fff;
+}
+.steps {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+.step-card {
+  background: #eaf3ff;
+  border-radius: 16px;
+  padding: 24px 32px;
+  min-width: 180px;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #2a5bd7;
+  font-weight: 600;
+  box-shadow: 0 1px 4px rgba(42,91,215,0.06);
+}
+.step-number {
+  display: block;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+/* ====== 定价模块 ====== */
+.pricing {
+  padding: 48px 40px 32px 40px;
+  background: #f8f9fb;
+}
+.pricing-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 32px;
+  margin-top: 24px;
+}
+.pricing-card {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(42,91,215,0.08);
+  padding: 32px 24px;
+  text-align: center;
+  transition: box-shadow 0.2s;
+}
+.pricing-card:hover {
+  box-shadow: 0 6px 24px rgba(42,91,215,0.16);
+}
+.price {
+  font-size: 2rem;
+  color: #2a5bd7;
+  font-weight: bold;
+  margin: 16px 0;
+}
+.pricing-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+}
+.pricing-card li {
+  margin-bottom: 8px;
+  color: #555;
+}
+
+/* ====== 用户评价 ====== */
+.testimonials {
+  padding: 48px 40px 32px 40px;
+  background: #fff;
+}
+.testimonial-cards {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+.testimonial-card {
+  background: #eaf3ff;
+  border-radius: 16px;
+  padding: 24px;
+  min-width: 220px;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(42,91,215,0.06);
+}
+.testimonial-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin-bottom: 12px;
+}
+.testimonial-user {
+  font-weight: bold;
+  color: #2a5bd7;
+  margin-bottom: 8px;
+}
+.testimonial-text {
+  color: #333;
+  font-size: 1rem;
+}
+
+/* ====== FAQ ====== */
+.faq {
+  padding: 48px 40px 32px 40px;
+  background: #f8f9fb;
+}
+.faq-list {
+  margin-top: 24px;
+}
+.faq-item {
+  margin-bottom: 16px;
+}
+.faq-question {
+  background: #fff;
+  color: #2a5bd7;
+  border: 1px solid #2a5bd7;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: background 0.2s;
+}
+.faq-question:hover {
+  background: #eaf3ff;
+}
+.faq-answer {
+  background: #fff;
+  border-radius: 12px;
+  margin-top: 8px;
+  padding: 16px 24px;
+  color: #333;
+  box-shadow: 0 1px 4px rgba(42,91,215,0.06);
+}
+
+/* ====== 行动号召区 ====== */
+.cta {
+  padding: 48px 40px 32px 40px;
+  background: linear-gradient(90deg,#eaf3ff 60%,#fff 100%);
+  text-align: center;
+}
+.cta h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 24px;
+}
+
+/* ====== 页脚 ====== */
+.footer {
+  background: #fff;
+  padding: 32px 40px;
+  text-align: center;
+  color: #888;
+  font-size: 1rem;
+  border-top: 1px solid #eaf3ff;
+}
+.footer-social {
+  margin-top: 12px;
+}
+.footer-social a {
+  color: #2a5bd7;
+  text-decoration: none;
+  margin: 0 8px;
+  font-weight: 500;
+}
+.footer-social a:hover {
+  text-decoration: underline;
+}
+
+/* ====== 响应式 ====== */
+@media (max-width: 900px) {
+  .hero, .partners, .advantages, .how-it-works, .pricing, .testimonials, .faq, .cta, .footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .navbar {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+@media (max-width: 600px) {
+  .hero {
+    flex-direction: column;
+    padding-top: 32px;
+    padding-bottom: 16px;
+  }
+  .hero-content {
+    max-width: 100%;
+  }
+  .partner-logos, .testimonial-cards {
+    gap: 12px;
+  }
+  .advantage-cards, .pricing-cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .steps {
+    flex-direction: column;
+    gap: 16px;
+  }
+}

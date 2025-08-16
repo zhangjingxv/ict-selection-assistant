@@ -1,12 +1,22 @@
 "use client";
-import { useEffect } from 'react';
 import { ragIndex, ragSearch, ragEvaluate, getCollections, deleteCollection, resetBM25, getEvals, getEvalCSV } from '@/lib/api';
 import InputField from '@/lib/components/InputField';
 import TabNavigation from '@/lib/components/TabNavigation';
+/**
+ * FormField component props:
+ * - label: string - The label for the field.
+ * - value: string - The current value of the field.
+ * - onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void - Change handler.
+ * - placeholder?: string - Optional placeholder text.
+ * - options?: Array<{ value: string; label: string }> - For select fields, an array of option objects with 'value' and 'label'.
+ */
 import FormField from '@/lib/components/FormField';
 import '@/styles/common.css';
 import { useCollections, useEvalResults } from '@/lib/hooks/useDataHooks';
+// import { useCollections, useEvalResults } from '@/lib/hooks/useDataHooks'; // Removed: custom hooks not found
 
+// Replace custom hooks with local state and loading logic
+import { useState } from 'react';
 const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://127.0.0.1:8000';
 
 // 添加详细的 TypeScript 类型定义
@@ -24,14 +34,16 @@ interface EvalResult {
 }
 
 export default function ManagementPage() {
-  // 替换集合和评测结果的加载逻辑
-  const { collections, loading: collectionsLoading, setCollections } = useCollections(apiBase);
-  const { evalResults, loading: evalResultsLoading, setEvalResults } = useEvalResults(apiBase);
+export default function ManagementPage() {
+  // 集合和评测结果的本地状态
+  const [collections, setCollections] = useState<Collection[]>([]);
+  const [collectionsLoading, setCollectionsLoading] = useState(false);
+  const [evalResults, setEvalResults] = useState<EvalResult[]>([]);
+  const [evalResultsLoading, setEvalResultsLoading] = useState(false);
 
   // 替换原有的 loading 状态
   const loading = collectionsLoading || evalResultsLoading;
   const [activeTab, setActiveTab] = useState('collections');
-
   // 索引参数
   const [indexCollection, setIndexCollection] = useState('ict_docs');
   const [indexProvider, setIndexProvider] = useState('qwen');
@@ -53,25 +65,31 @@ export default function ManagementPage() {
 
   // 改进错误处理，提供更友好的用户提示
   async function loadCollections() {
+  async function loadCollections() {
+    setCollectionsLoading(true);
     try {
       const res: { collections: Collection[] } = await getCollections(apiBase);
       setCollections(res.collections || []);
     } catch (error) {
       console.error('加载集合失败:', error);
       alert('加载集合失败，请检查网络连接或API状态。');
+    } finally {
+      setCollectionsLoading(false);
     }
   }
 
   async function loadEvalResults() {
+    setEvalResultsLoading(true);
     try {
       const res: { evals: EvalResult[] } = await getEvals(apiBase);
       setEvalResults(res.evals || []);
     } catch (error) {
       console.error('加载评测结果失败:', error);
       alert('加载评测结果失败，请检查网络连接或API状态。');
+    } finally {
+      setEvalResultsLoading(false);
     }
   }
-
   async function onIndexDocs() {
     if (!indexText.trim()) {
       alert('请输入要索引的文档内容');
