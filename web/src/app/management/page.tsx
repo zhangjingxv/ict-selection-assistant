@@ -16,7 +16,7 @@ import { useCollections, useEvalResults } from '@/lib/hooks/useDataHooks';
 // import { useCollections, useEvalResults } from '@/lib/hooks/useDataHooks'; // Removed: custom hooks not found
 
 // Replace custom hooks with local state and loading logic
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 const apiBase = process.env.NEXT_PUBLIC_API_BASE || 'http://127.0.0.1:8000';
 
 // 添加详细的 TypeScript 类型定义
@@ -33,7 +33,6 @@ interface EvalResult {
   latency_p95: number;
 }
 
-export default function ManagementPage() {
 export default function ManagementPage() {
   // 集合和评测结果的本地状态
   const [collections, setCollections] = useState<Collection[]>([]);
@@ -62,6 +61,20 @@ export default function ManagementPage() {
     loadCollections();
     loadEvalResults();
   }, []);
+
+  // 评测结果加载函数补充
+  async function loadEvalResults() {
+    setEvalResultsLoading(true);
+    try {
+  const res: any = await getEvals(apiBase);
+  setEvalResults(res.results || res.evals || []);
+    } catch (error) {
+      console.error('加载评测结果失败:', error);
+      alert('加载评测结果失败，请检查网络连接或API状态。');
+    } finally {
+      setEvalResultsLoading(false);
+    }
+  }
 
   // 改进错误处理，提供更友好的用户提示
   async function loadCollections() {

@@ -2,7 +2,7 @@
 import React, { useMemo, useState } from 'react';
 import { postPlan, getRubric, postInfer } from '@/lib/api';
 
-import '@/styles/common.css';
+import '../../styles/common.css';
 import Navbar from '@/lib/components/Navbar';
 import AdvantageCards from '@/lib/components/AdvantageCards';
 import PricingCards from '@/lib/components/PricingCards';
@@ -14,12 +14,12 @@ const partners = [
 ];
 
 const advantages = [
-  { title: '高效转化', desc: '专注业务场景，提升用户转化率' },
-  { title: '智能推荐', desc: 'AI驱动，精准匹配需求' },
-  { title: '易用性强', desc: '极简操作，快速上手' },
-  { title: '安全可靠', desc: '企业级安全保障' },
-  { title: '灵活扩展', desc: '支持多种业务场景' },
-  { title: '数据可视化', desc: '实时数据分析与展示' }
+  { icon: '🚀', title: '高效转化', desc: '专注业务场景，提升用户转化率' },
+  { icon: '🤖', title: '智能推荐', desc: 'AI驱动，精准匹配需求' },
+  { icon: '🎯', title: '易用性强', desc: '极简操作，快速上手' },
+  { icon: '🔒', title: '安全可靠', desc: '企业级安全保障' },
+  { icon: '🧩', title: '灵活扩展', desc: '支持多种业务场景' },
+  { icon: '📊', title: '数据可视化', desc: '实时数据分析与展示' }
 ];
 
 const steps = [
@@ -81,17 +81,22 @@ export default function Page() {
       {/* 标题区 */}
       <section className="hero">
         <div className="hero-content">
-          <h1>高转化率SaaS选型落地页</h1>
-          <p>专注业务场景，提升用户转化率，助力企业智能升级</p>
+          <h1>ICT选型助手</h1>
+          <p>智能推荐，场景化选型，助力企业高效部署ICT解决方案</p>
           <div className="hero-stats">
-            <span>1200+ 企业用户</span>
-            <span>99.9% SLA保障</span>
-            <span>7x24小时服务</span>
+            <span>2000+ 企业信赖</span>
+            <span>覆盖30+行业场景</span>
+            <span>7x24小时专家服务</span>
           </div>
-          <a href="#cta" className="button button-primary">立即体验</a>
+          <a href="#cta" className="button button-primary" style={{ fontSize: '1.2rem', padding: '16px 40px', marginTop: 16 }}>免费体验ICT选型</a>
         </div>
-        <div className="hero-image">
-          {/* 可放产品示意图 */}
+        <div className="hero-image" style={{ minWidth: 320, minHeight: 220, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          {/* 产品示意SVG */}
+          <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
+            <rect x="20" y="40" width="140" height="100" rx="18" fill="#eaf3ff" />
+            <rect x="40" y="60" width="100" height="60" rx="10" fill="#2a5bd7" />
+            <text x="90" y="95" textAnchor="middle" fill="#fff" fontSize="22" fontWeight="bold">ICT</text>
+          </svg>
         </div>
       </section>
 
@@ -107,12 +112,13 @@ export default function Page() {
 
       {/* 产品优势区 */}
       <section id="advantages" className="advantages">
-        <h2>产品优势</h2>
+        <h2>为什么选择ICT选型助手？</h2>
         <div className="advantage-cards">
           {advantages.map((adv, i) => (
             <div key={i} className="advantage-card">
-              <h3>{adv.title}</h3>
-              <p>{adv.desc}</p>
+              <div style={{ fontSize: '2.2rem', marginBottom: 8 }}>{adv.icon}</div>
+              <h3>{adv.title.replace('高效转化', '智能选型').replace('智能推荐', '场景匹配').replace('易用性强', '极简操作').replace('安全可靠', '数据安全').replace('灵活扩展', '行业覆盖').replace('数据可视化', '实时分析')}</h3>
+              <p>{adv.desc.replace('专注业务场景，提升用户转化率', 'AI驱动，精准推荐ICT方案').replace('AI驱动，精准匹配需求', '覆盖多行业场景，灵活选型').replace('极简操作，快速上手', '一键选型，快速部署').replace('企业级安全保障', '数据加密，安全合规').replace('支持多种业务场景', '支持30+行业场景').replace('实时数据分析与展示', '选型过程全程可视化')}</p>
             </div>
           ))}
         </div>
@@ -133,16 +139,17 @@ export default function Page() {
 
       {/* 定价模块 */}
       <section id="pricing" className="pricing">
-        <h2>定价方案</h2>
+        <h2>服务套餐</h2>
         <div className="pricing-cards">
           {pricing.map((plan, i) => (
-            <div key={i} className="pricing-card">
-              <h3>{plan.name}</h3>
+            <div key={i} className="pricing-card" style={i === 1 ? { border: '2px solid #2a5bd7', boxShadow: '0 4px 16px #2a5bd733' } : {}}>
+              <h3>{plan.name.replace('基础版', '标准版').replace('专业版', '企业版').replace('旗舰版', '定制版')}</h3>
               <div className="price">{plan.price}</div>
               <ul>
-                {plan.features.map((f, j) => <li key={j}>{f}</li>)}
+                {plan.features.map((f, j) => <li key={j}>{f.replace('基础功能', 'ICT基础选型').replace('高级功能', '行业场景推荐').replace('专属服务', '专家一对一服务')}</li>)}
               </ul>
-              <a href="#cta" className="button button-secondary">{plan.cta}</a>
+              <a href="#cta" className={i === 1 ? 'button button-primary' : 'button button-secondary'} style={i === 1 ? { fontSize: '1.1rem', padding: '12px 32px' } : {}}>{plan.cta.replace('立即购买', '立即体验')}</a>
+              {i === 1 && <div style={{ color: '#2a5bd7', fontWeight: 500, marginTop: 8 }}>推荐企业选型</div>}
             </div>
           ))}
         </div>
@@ -150,37 +157,43 @@ export default function Page() {
 
       {/* 用户评价区 */}
       <section className="testimonials">
-        <h2>深受全球用户的喜爱</h2>
-        <div className="testimonial-cards">
+        <h2>企业用户真实评价</h2>
+        <div className="testimonial-cards" style={{ overflowX: 'auto', whiteSpace: 'nowrap', paddingBottom: 8 }}>
           {testimonials.map((t, i) => (
-            <div key={i} className="testimonial-card">
+            <div key={i} className="testimonial-card" style={{ display: 'inline-block', minWidth: 220, marginRight: 16 }}>
               <img src={t.avatar} alt={t.user} className="testimonial-avatar" />
               <div className="testimonial-user">{t.user}</div>
-              <div className="testimonial-text">{t.text}</div>
+              <div style={{ color: '#FFD700', fontSize: '1.2rem', marginBottom: 4 }}>★★★★★</div>
+              <div className="testimonial-text">{t.text.replace('产品很棒', '选型效率提升了3倍').replace('服务很专业', '专家建议非常有价值').replace('体验很好', 'ICT方案推荐很精准')}</div>
             </div>
           ))}
+          <div style={{ display: 'inline-block', minWidth: 40, color: '#aaa', verticalAlign: 'middle' }}>⇢</div>
         </div>
       </section>
 
       {/* 常见问题区 */}
       <section id="faq" className="faq">
-        <h2>常见问题</h2>
+        <h2>关于ICT选型助手</h2>
         <div className="faq-list">
           {faqs.map((f, i) => (
             <div key={i} className="faq-item">
-              <button className="faq-question" onClick={() => setFaqOpen(faqOpen === i ? null : i)}>
-                {f.q}
+              <button className="faq-question" onClick={() => setFaqOpen(faqOpen === i ? null : i)} style={{ transition: 'background 0.2s' }}>
+                {f.q.replace('产品支持哪些行业？', 'ICT选型助手支持哪些行业？').replace('如何保障数据安全？', '如何保障选型数据安全？').replace('是否有免费试用？', '是否有免费选型体验？').replace('售后服务如何？', '选型专家服务如何？')}
+                <span style={{ float: 'right', fontWeight: 'bold', color: '#2a5bd7' }}>{faqOpen === i ? '−' : '+'}</span>
               </button>
-              {faqOpen === i && <div className="faq-answer">{f.a}</div>}
+              <div style={{ maxHeight: faqOpen === i ? 200 : 0, overflow: 'hidden', transition: 'max-height 0.3s' }}>
+                {faqOpen === i && <div className="faq-answer">{f.a.replace('覆盖金融、制造、零售等多个行业', '覆盖ICT、金融、制造、零售等30+行业场景').replace('采用企业级加密技术', '采用企业级加密技术，保障选型数据安全').replace('提供7天免费试用', '提供30天免费选型体验，无需信用卡').replace('7x24小时在线支持', '7x24小时专家在线服务')}</div>}
+              </div>
             </div>
           ))}
         </div>
       </section>
 
       {/* 行动号召区 */}
-      <section id="cta" className="cta">
-        <h2>立即体验高转化率SaaS选型助手</h2>
-        <a href="/management" className="button button-primary">开始选型</a>
+      <section id="cta" className="cta" style={{ background: 'linear-gradient(90deg,#eaf3ff 60%,#fff 100%)', padding: '64px 16px', textAlign: 'center' }}>
+        <h2 style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: 24 }}>立即体验ICT选型助手</h2>
+        <a href="/management" className="button button-primary" style={{ fontSize: '1.3rem', padding: '20px 56px', borderRadius: 32 }}>免费开启智能选型</a>
+        <div style={{ marginTop: 24, color: '#2a5bd7', fontWeight: 500 }}>无需信用卡，30天免费体验</div>
       </section>
 
       {/* 页脚 */}
@@ -193,141 +206,7 @@ export default function Page() {
     </main>
   );
 }
-  const [scenario, setScenario] = useState('rag');
-  const [qps, setQps] = useState(800);
-  const [p95, setP95] = useState(300);
-  const [payload, setPayload] = useState(6);
-  const [growth, setGrowth] = useState(2.5);
-  const [hit, setHit] = useState(0.7);
-  const [emb, setEmb] = useState(1024);
-  const [batch, setBatch] = useState(32);
-  const [compliance, setCompliance] = useState('strict');
-  const [avail, setAvail] = useState(0.7);
-  const [latRisk, setLatRisk] = useState(0.6);
 
-  const [provider, setProvider] = useState<'openai' | 'qwen'>('openai');
-  const [model, setModel] = useState('gpt-4o-mini');
 
-  const [plan, setPlan] = useState<any>(null);
-  const [rubric, setRubric] = useState<any>(null);
-  const [inferText, setInferText] = useState('用一句话总结参数化规划要点');
-  const [inferResult, setInferResult] = useState<string>('');
-  const [loading, setLoading] = useState(false);
-
-  const canInfer = useMemo(() => !!provider && !!model && !!inferText, [provider, model, inferText]);
-
-  async function onPlan() {
-    setLoading(true);
-    try {
-      const res = await postPlan(apiBase, {
-        scenario,
-        current: {
-          qps_peak: Number(qps),
-          latency_p95_ms: Number(p95),
-          payload_kb: Number(payload),
-          growth_12m: Number(growth),
-          reads_per_request: 1.0,
-          writes_per_request: 0.1,
-          cache_hit_ratio: Number(hit),
-        },
-        data: { embedding_dim: Number(emb), batch: Number(batch) },
-        constraints: { compliance },
-        risk: { availability: Number(avail), latency: Number(latRisk) },
-      });
-      setPlan(res.plan);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function onRubric() {
-    const res = await getRubric(apiBase);
-    setRubric(res.rubric);
-  }
-
-  async function onInfer() {
-    setInferResult('');
-    if (!canInfer) return;
-    const res = await postInfer(apiBase, {
-      provider,
-      model,
-      temperature: 0.2,
-      messages: [
-        { role: 'system', content: '你是资深架构师，只输出简洁的要点。' },
-        { role: 'user', content: inferText },
-        plan ? { role: 'user', content: `参考规划: ${JSON.stringify(plan).slice(0, 4000)}` } : null,
-      ].filter(Boolean),
-    });
-    const txt = res?.choices?.[0]?.message?.content || res?.error?.message || JSON.stringify(res).slice(0, 2000);
-    setInferResult(txt);
-  }
-
-  return (
-    <main style={{ maxWidth: 1200, margin: '0 auto', padding: 24 }}>
-      <h1>ICT 选型助手（参数化规划 + RAM/RAG 评估）</h1>
-      <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-        <div style={{ border: '1px solid #eee', padding: 16, borderRadius: 8 }}>
-          <h3>业务参数</h3>
-          <div>场景
-            <select value={scenario} onChange={(e) => setScenario(e.target.value)}>
-              <option value="rag">RAG/RAM</option>
-              <option value="virtualization">Virtualization</option>
-              <option value="campus_access">Campus Access</option>
-              <option value="sec_boundary">Security Boundary</option>
-            </select>
-          </div>
-          <div>QPS 峰值 <input type="number" value={qps} onChange={(e)=>setQps(Number(e.target.value))} /></div>
-          <div>P95 延迟(ms) <input type="number" value={p95} onChange={(e)=>setP95(Number(e.target.value))} /></div>
-          <div>请求大小(KB) <input type="number" value={payload} onChange={(e)=>setPayload(Number(e.target.value))} /></div>
-          <div>12月增长倍数 <input type="number" step="0.1" value={growth} onChange={(e)=>setGrowth(Number(e.target.value))} /></div>
-          <div>缓存命中率(0-1) <input type="number" step="0.01" value={hit} onChange={(e)=>setHit(Number(e.target.value))} /></div>
-          <div>嵌入维度 <input type="number" value={emb} onChange={(e)=>setEmb(Number(e.target.value))} /></div>
-          <div>批大小 <input type="number" value={batch} onChange={(e)=>setBatch(Number(e.target.value))} /></div>
-          <div>合规类型
-            <select value={compliance} onChange={(e)=>setCompliance(e.target.value)}>
-              <option value="strict">strict</option>
-              <option value="regulated">regulated</option>
-              <option value="legacy">legacy</option>
-            </select>
-          </div>
-          <div>可用性偏好(0-1) <input type="number" step="0.01" value={avail} onChange={(e)=>setAvail(Number(e.target.value))} /></div>
-          <div>延迟偏好(0-1) <input type="number" step="0.01" value={latRisk} onChange={(e)=>setLatRisk(Number(e.target.value))} /></div>
-          <button onClick={onPlan} disabled={loading}>{loading ? '计算中…' : '生成参数化规划'}</button>
-          <button onClick={onRubric} style={{ marginLeft: 8 }}>获取评估Rubric</button>
-        </div>
-
-        <div style={{ border: '1px solid #eee', padding: 16, borderRadius: 8 }}>
-          <h3>推理提供商(代理)</h3>
-          <div>Provider
-            <select value={provider} onChange={(e)=>setProvider(e.target.value as any)}>
-              <option value="openai">OpenAI</option>
-              <option value="qwen">千问(Qwen)</option>
-            </select>
-          </div>
-          <div>Model <input value={model} onChange={(e)=>setModel(e.target.value)} placeholder="gpt-4o-mini 或 qwen-turbo" /></div>
-          <div>
-            <textarea value={inferText} onChange={(e)=>setInferText(e.target.value)} rows={5} style={{ width: '100%' }} />
-          </div>
-          <button onClick={onInfer} disabled={!canInfer}>调用 /api/llm/infer</button>
-          {inferResult && (
-            <pre style={{ whiteSpace: 'pre-wrap', background: '#fafafa', padding: 8 }}>{inferResult}</pre>
-          )}
-        </div>
-      </section>
-
-      <section style={{ marginTop: 16, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-        <div>
-          <h3>参数化规划结果</h3>
-          <pre style={{ background: '#fafafa', padding: 12, whiteSpace: 'pre-wrap' }}>{plan ? JSON.stringify(plan, null, 2) : '尚未生成'}</pre>
-        </div>
-        <div>
-          <h3>RAM/RAG 评估 Rubric</h3>
-          <pre style={{ background: '#fafafa', padding: 12, whiteSpace: 'pre-wrap' }}>{rubric ? JSON.stringify(rubric, null, 2) : '点击上方按钮获取'}</pre>
-        </div>
-      </section>
-      <footer style={{ marginTop: 24, color: '#666' }}>API: {apiBase}</footer>
-    </main>
-  );
-}
 
 
